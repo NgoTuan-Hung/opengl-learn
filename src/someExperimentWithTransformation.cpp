@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stb/stb_image.cpp>
 #include "shader.h"
+#include <getPath.cpp>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -17,7 +18,7 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -57,13 +58,13 @@ int main()
         1, 2, 3    // second triangle
     };  
 
-    std::string projectPath = "C:\\\\Users\\\\ADMIN88\\\\Desktop\\\\Files\\\\Project\\\\Shader\\\\opengl\\\\proj\\\\";
-    std::string vertexPath = projectPath + "shader\\\\SEWT_vertex.glsl";
-    std::string fragmentPath = projectPath + "shader\\\\SEWT_fragment.glsl";
+    std::string projectPath = getPath(argc, argv);
+    std::string vertexPath = projectPath + "\\\\shader\\\\SEWT_vertex.glsl";
+    std::string fragmentPath = projectPath + "\\\\shader\\\\SEWT_fragment.glsl";
     Shader testShader(vertexPath.data(), fragmentPath.data());
     
     // jpg path is src/container.jpg - now create a string path
-    std::string jpgPath = projectPath + "img\\\\container.jpg";
+    std::string jpgPath = projectPath + "\\\\img\\\\container.jpg";
     int width, height, nrChannels;
     unsigned char *data = stbi_load(jpgPath.data(), &width, &height, &nrChannels, 0); 
     unsigned int texture1, texture2;
@@ -80,7 +81,7 @@ int main()
 
     {
         //stbi_image_free(data);
-        jpgPath = projectPath + "img\\\\container1.jpg";
+        jpgPath = projectPath + "\\\\img\\\\container1.jpg";
         data = stbi_load(jpgPath.data(), &width, &height, &nrChannels, 0);
         glGenTextures(1, &texture2); 
         glBindTexture(GL_TEXTURE_2D, texture2);

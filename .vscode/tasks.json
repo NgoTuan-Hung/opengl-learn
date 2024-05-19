@@ -4,13 +4,13 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe build active file",
-            "command": "D:/Program/mingw64/bin/g++.exe",
+            "command": "D:/Program/msys2/ucrt64/bin/g++.exe",
             "args": [
                 "-g",
                 "-std=c++17",
                 "-I${workspaceFolder}/include",
                 "-L${workspaceFolder}/lib",
-                "${workspaceFolder}/src/usingGLM.cpp",
+                "${workspaceFolder}/src/geometryShader.cpp",
                 "${workspaceFolder}/src/glad.c",
                 "-lglfw3dll",
                 "-o",
@@ -26,7 +26,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "compiler: D:/Program/mingw64/bin/g++.exe"
+            "detail": "compiler: D:/Program/msys2/ucrt64/bin/g++.exe"
         }
     ]
 }

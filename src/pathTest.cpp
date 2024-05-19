@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <getPath.cpp>
 
 void printFileContent(const std::string& filePath) {
     std::ifstream file(filePath);
@@ -15,9 +16,13 @@ void printFileContent(const std::string& filePath) {
     }
 }
 
-int main() {
-    std::string projectPath = "C:\\\\Users\\\\ADMIN88\\\\Desktop\\\\Files\\\\Project\\\\Shader\\\\opengl\\\\proj\\\\";
-    std::string filePath = projectPath + "src\\\\fragment.glsl"; // Specify the path to your file here
+int main(int argc, char* argv[]) 
+{
+    std::string projectPath = getPath(argc, argv);
+    std::string filePath = projectPath + "\\\\shader\\\\fragment.glsl"; // Specify the path to your file here
+    std::cout << "File path: " << filePath << std::endl;
     printFileContent(filePath);
+
+
     return 0;
 }

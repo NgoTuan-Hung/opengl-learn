@@ -49,21 +49,67 @@ int main(int argc, char* argv[])
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback); 
     
     float vertices[] = {
-     // positions         // colors         //texture cords
-    -1.f, -1.f, 0.0f,  1.0f, 0.0f, 0.0f, 1.0f, 1.0f,  
-    1.f, -1.f, 0.0f,  0.0f, 1.0f, 0.0f,  .0f, 1.0f,   
-    -1.f,  1.f, 0.0f,  0.0f, 0.0f, 1.0f, 1.0f, .0f,
-    1.f,  1.f, 0.0f,  0.3f, 0.3f, .3f  , .0f, .0f 
+     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
     unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 2,   // first triangle
-        1, 2, 3    // second triangle
+        0, 1, 2,   
+        3, 4, 5,   
+        6, 7, 8,
+        9, 10, 11,
+        12, 13, 14,
+        15, 16, 17,
+        18, 19, 20,
+        21, 22, 23,
+        24, 25, 26,
+        27, 28, 29,
+        30, 31, 32,
+        33, 34, 35
     };  
 
     std::string projectPath = getPath(argc, argv);
-    std::string vertexPath = projectPath + "\\\\shader\\\\glm_vertex.glsl";
-    std::string fragmentPath = projectPath + "\\\\shader\\\\glm_fragment.glsl";
+    std::string vertexPath = projectPath + "\\\\shader\\\\coord_vertex.glsl";
+    std::string fragmentPath = projectPath + "\\\\shader\\\\coord_fragment.glsl";
     Shader testShader(vertexPath.data(), fragmentPath.data());
     
     // jpg path is src/container.jpg - now create a string path
@@ -109,62 +155,32 @@ int main(int argc, char* argv[])
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW); 
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3*sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float)));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float)));
-    glEnableVertexAttribArray(2);
+
+    glEnable(GL_DEPTH_TEST);
 
     // for getting the maximum number of vertex attributes
     int nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
     std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 
-    glm::mat4 rotMat;
-    glm::vec4 vec;
-    float time;
+    glm::mat4 rotate = glm::mat4(1.0f);
     
     while(!glfwWindowShouldClose(window))
     {
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
 
-        time = fmod(glfwGetTime(), 360.) / 1000;
-        {
-            vec = glm::vec4(vertices[0], vertices[1], vertices[2], 1.0f);
-            rotMat = glm::mat4(1.0f);
-            rotMat = glm::rotate(rotMat, time, glm::vec3(0.0f, 1.0f, 0.0f));
-            vec = rotMat * vec;
-            vertices[0] = vec.x; vertices[1] = vec.y; vertices[2] = vec.z;
-
-            vec = glm::vec4(vertices[8], vertices[9], vertices[10], 1.0f);
-            rotMat = glm::mat4(1.0f);
-            rotMat = glm::rotate(rotMat, time, glm::vec3(0.0f, 1.0f, 0.0f));
-            vec = rotMat * vec;
-            vertices[8] = vec.x; vertices[9] = vec.y; vertices[10] = vec.z;
-
-            vec = glm::vec4(vertices[16], vertices[17], vertices[18], 1.0f);
-            rotMat = glm::mat4(1.0f);
-            rotMat = glm::rotate(rotMat, time, glm::vec3(0.0f, 1.0f, 0.0f));
-            vec = rotMat * vec;
-            vertices[16] = vec.x; vertices[17] = vec.y; vertices[18] = vec.z;
-
-            vec = glm::vec4(vertices[24], vertices[25], vertices[26], 1.0f);
-            rotMat = glm::mat4(1.0f);
-            rotMat = glm::rotate(rotMat, time, glm::vec3(0.0f, 1.0f, 0.0f));
-            vec = rotMat * vec;
-            vertices[24] = vec.x; vertices[25] = vec.y; vertices[26] = vec.z;
-
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-        }
         testShader.use();
         glBindVertexArray(VAO);
         
@@ -172,8 +188,10 @@ int main(int argc, char* argv[])
         //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW); 
 
-        testShader.setFloat("time", glfwGetTime()/3.0f);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        rotate = glm::rotate(glm::mat4(1.0f), (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "rotate"), 1, GL_FALSE, glm::value_ptr(rotate));
+        testShader.setFloat("time", glfwGetTime());
+        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();   

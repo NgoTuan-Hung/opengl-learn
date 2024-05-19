@@ -3,6 +3,7 @@
 #include <iostream>
 #include <math.h>
 #include "shader.h"
+#include <getPath.cpp>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -16,7 +17,7 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -56,9 +57,9 @@ int main()
         1, 2, 3    // second triangle
     };  
 
-    std::string projectPath = "C:\\\\Users\\\\ADMIN88\\\\Desktop\\\\Files\\\\Project\\\\Shader\\\\opengl\\\\proj\\\\";
-    std::string vertexPath = projectPath + "src\\\\vertex.glsl";
-    std::string fragmentPath = projectPath + "src\\\\fragment.glsl";
+    std::string projectPath = getPath(argc, argv);
+    std::string vertexPath = projectPath + "\\\\src\\\\vertex.glsl";
+    std::string fragmentPath = projectPath + "\\\\src\\\\fragment.glsl";
     Shader testShader(vertexPath.data(), fragmentPath.data());
     //my testShader require char[] but i put string in it
     //how can i fix this
